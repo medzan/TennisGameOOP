@@ -1,23 +1,24 @@
-package com.ezangui.kata.adapter.event;
+package com.ezangui.kata.domain.model.update;
 
 import com.ezangui.kata.domain.model.Player;
-import com.ezangui.kata.domain.port.spi.MessageEvent;
 
 /**
  * @author ZANGUI Elmehdi
  */
-public class WinnerEventMessage implements MessageEvent {
+public class WinnerUpdate extends GameUpdate<String> {
     private final String message;
-    public WinnerEventMessage(Player winner) {
+
+    public WinnerUpdate(Player winner) {
         this.message = String.format("Player %s wins the game", winner.name());
     }
+
     @Override
-    public String getMessage() {
+    public String getUpdate() {
         return message;
     }
 
     @Override
     public String toString() {
-        return getMessage();
+        return getUpdate();
     }
 }

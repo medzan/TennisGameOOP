@@ -1,6 +1,7 @@
 package com.ezangui.kata.domain.port.spi;
 
 import com.ezangui.kata.domain.model.TennisGame;
+import com.ezangui.kata.domain.model.update.GameUpdate;
 
 import java.util.List;
 
@@ -8,9 +9,9 @@ import java.util.List;
  * @author ZANGUI Elmehdi
  */
 public interface GameStorePort {
-    void addMessage(TennisGame tennisGame, MessageEvent message);
+    void addMessage(TennisGame tennisGame, GameUpdate message);
 
-    List<MessageEvent> getMessages(TennisGame tennisGame);
+    List<GameUpdate> getMessages(TennisGame tennisGame);
 
     void createGame(TennisGame tennisGame);
 

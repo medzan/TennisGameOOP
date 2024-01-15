@@ -3,8 +3,8 @@ package com.ezangui.kata.client;
 import com.ezangui.kata.adapter.client.SimpleTennisGameClient;
 import com.ezangui.kata.adapter.memory.GameMemoryStoreAdapter;
 import com.ezangui.kata.application.TennisApplicationService;
+import com.ezangui.kata.domain.model.update.GameUpdate;
 import com.ezangui.kata.domain.port.api.TennisGameService;
-import com.ezangui.kata.domain.port.spi.MessageEvent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +26,7 @@ public class SimpleTennisTennisGameTest {
         TennisGameService service = new TennisApplicationService(gameMessageMemoryStore);
         SimpleTennisGameClient consoleInputTennisGame = new SimpleTennisGameClient(service);
 
-        List<MessageEvent> actualResults = consoleInputTennisGame.createAndRunAGame("A", "B", "ABABAA");
+        List<GameUpdate> actualResults = consoleInputTennisGame.createAndRunAGame("A", "B", "ABABAA");
 
         Assertions.assertEquals(expected.size(), actualResults.size());
 
@@ -51,7 +51,7 @@ public class SimpleTennisTennisGameTest {
 
         TennisGameService service = new TennisApplicationService(gameMessageMemoryStore);
         SimpleTennisGameClient consoleInputTennisGame = new SimpleTennisGameClient(service);
-        List<MessageEvent> actualResults = consoleInputTennisGame.createAndRunAGame("A", "B", "ABABABBB");
+        List<GameUpdate> actualResults = consoleInputTennisGame.createAndRunAGame("A", "B", "ABABABBB");
 
         Assertions.assertEquals(expected.size(), actualResults.size());
 
@@ -79,7 +79,7 @@ public class SimpleTennisTennisGameTest {
 
         TennisGameService service = new TennisApplicationService(gameMessageMemoryStore);
         SimpleTennisGameClient consoleInputTennisGame = new SimpleTennisGameClient(service);
-        List<MessageEvent> actualResults = consoleInputTennisGame.createAndRunAGame("A", "B", "ABABABBAAA");
+        List<GameUpdate> actualResults = consoleInputTennisGame.createAndRunAGame("A", "B", "ABABABBAAA");
 
         Assertions.assertEquals(expected.size(), actualResults.size());
 

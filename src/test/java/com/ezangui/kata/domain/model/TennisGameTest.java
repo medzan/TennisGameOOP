@@ -1,12 +1,13 @@
 package com.ezangui.kata.domain.model;
 
-import com.ezangui.kata.domain.model.view.PlayerScoreView;
+import com.ezangui.kata.domain.model.rule.SingleMatchRule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
@@ -18,25 +19,25 @@ public class TennisGameTest {
 
     @Test
     public void gameDoNotStart_beforePlayersInit() {
-        TennisGame tennisGame = new TennisGame("1");
+        TennisGame tennisGame = new TennisGame("1", new SingleMatchRule());
         Assertions.assertThrows(IllegalStateException.class,
                 () -> tennisGame.scorePointForPlayer(firstPlayer));
     }
     @Test
     public void whenNewPlayersAdded_GameChangeStateToInProgress() {
-        TennisGame tennisGame = new TennisGame("1");
-        tennisGame.addPlayers(firstPlayer, secondPlayer);
+        TennisGame tennisGame = new TennisGame("1",new SingleMatchRule());
+        tennisGame.addPlayers(Arrays.asList(firstPlayer, secondPlayer));
         Assertions.assertTrue(tennisGame.inProgress());
     }
     @Test
     public void afterMultipleRounds_GameUpdateTheCurrentScore() {
-        TennisGame tennisGame = new TennisGame("1");
-        tennisGame.addPlayers(firstPlayer, secondPlayer);
+        TennisGame tennisGame = new TennisGame("1",new SingleMatchRule());
+        tennisGame.addPlayers(Arrays.asList(firstPlayer, secondPlayer));
 
         tennisGame.scorePointForPlayer(firstPlayer);
         tennisGame.scorePointForPlayer(secondPlayer);
         tennisGame.scorePointForPlayer(secondPlayer);
-        List<PlayerScoreView> currentScore = tennisGame.getCurrentScore();
+        List<ScoreBoard.GamePlayerScore> currentScore = tennisGame.getCurrentScore();
         Assertions.assertEquals(2, currentScore.size());
 
         Assertions.assertEquals("15",currentScore.get(0).scorePoint().toString());

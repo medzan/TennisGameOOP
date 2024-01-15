@@ -1,9 +1,8 @@
 package com.ezangui.kata.domain.model;
 
-import com.ezangui.kata.domain.model.view.PlayerScoreView;
+import com.ezangui.kata.domain.model.rule.MatchRule;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Handle the game's workflow, tracking states and winners,
@@ -13,55 +12,59 @@ import java.util.Optional;
  */
 public class TennisGame {
     private final String id;
+    private final MatchRule matchRules;
     private GameState state;
-    private Player winner = null;
     private ScoreBoard scoreboard;
+    private Player winner = null;
 
-    enum GameState {
-        CREATED, IN_PROGRESS, FINISHED
-    }
-
-    public TennisGame(String id) {
+    public TennisGame(String id, MatchRule matchRules) {
         this.id = id;
+        this.matchRules = matchRules;
         this.state = GameState.CREATED;
     }
 
-    public void addPlayers(Player firstPlayer, Player secondPlayer) {
+    public void addPlayers(List<Player> players) {
         if (state != GameState.CREATED) {
             throw new IllegalStateException("Players can only join a recently created game." +
                     " The current game is in the following state: " + state);
         }
-        this.scoreboard = new ScoreBoard(firstPlayer, secondPlayer);
+        matchRules.validatePlayers(players);
+        this.scoreboard = new ScoreBoard(players);
         this.state = GameState.IN_PROGRESS;
-
     }
 
-    public TennisScore scorePointForPlayer(Player player) {
+    public void scorePointForPlayer(Player player) {
         if (state != GameState.IN_PROGRESS) {
             throw new IllegalStateException("Cannot Play any more the game is in the following state " + state);
         }
         if (player == null) {
             throw new IllegalStateException();
         }
-        TennisScore scorePoint = scoreboard.winPointForPlayer(player);
-        if (scorePoint.winnerScore()) {
+        scoreboard.scorePoint(player);
+        if (matchRules.determineWinner(scoreboard.getCurrentScore())) {
             winner = player;
             state = GameState.FINISHED;
         }
-        return scorePoint;
     }
 
-    public Optional<Player> getWinner() {
-        return Optional.ofNullable(winner);
+    public boolean HasPlayerWonTheGame(Player player) {
+        return state == GameState.FINISHED && winner.equals(player);
     }
+
     public String getId() {
         return id;
     }
+
     public boolean inProgress() {
         return state != GameState.FINISHED;
     }
-    public List<PlayerScoreView> getCurrentScore() {
-            return  scoreboard.getCurrentScore();
+
+    public List<ScoreBoard.GamePlayerScore> getCurrentScore() {
+        return scoreboard.getCurrentScore();
+    }
+
+    private enum GameState {
+        CREATED, IN_PROGRESS, FINISHED
     }
 
 }

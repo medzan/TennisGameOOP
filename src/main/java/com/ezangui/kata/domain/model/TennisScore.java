@@ -3,20 +3,11 @@ package com.ezangui.kata.domain.model;
 /**
  * Address various scenarios associated with updating a tennis score value,
  * managing transitions between different score values.
+ *
  * @author ZANGUI Elmehdi
  */
 public final class TennisScore {
 
-     enum Score {
-        ZERO_POINT("0"), ONE_POINT("15"),
-        TWO_POINTS("30"), THREE_POINTS("40"),
-        ADVANTAGE("A"), WIN("WINNER");
-        private final String label;
-
-        Score(String label) {
-            this.label = label;
-        }
-    }
     private Score score;
 
     TennisScore(Score score) {
@@ -26,6 +17,7 @@ public final class TennisScore {
     static TennisScore initScore() {
         return new TennisScore(Score.ZERO_POINT);
     }
+
     static TennisScore clone(TennisScore scorePoint) {
         return new TennisScore(scorePoint.score);
     }
@@ -38,11 +30,11 @@ public final class TennisScore {
         score = Score.THREE_POINTS;
     }
 
-    boolean winnerScore() {
+    public boolean winnerScore() {
         return score.equals(Score.WIN);
     }
 
-    boolean hasMaxPoints() {
+    boolean hasMaxRegularPoints() {
         return score.equals(Score.THREE_POINTS);
     }
 
@@ -76,6 +68,17 @@ public final class TennisScore {
     @Override
     public String toString() {
         return score.label;
+    }
+
+    private enum Score {
+        ZERO_POINT("0"), ONE_POINT("15"),
+        TWO_POINTS("30"), THREE_POINTS("40"),
+        ADVANTAGE("A"), WIN("WINNER");
+        private final String label;
+
+        Score(String label) {
+            this.label = label;
+        }
     }
 
 }

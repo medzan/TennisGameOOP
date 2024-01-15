@@ -1,11 +1,13 @@
 package com.ezangui.kata.application;
 
-import com.ezangui.kata.adapter.event.CurrentScoreMessageEvent;
-import com.ezangui.kata.adapter.event.WinnerEventMessage;
-import com.ezangui.kata.domain.model.TennisGame;
 import com.ezangui.kata.domain.model.Player;
+import com.ezangui.kata.domain.model.TennisGame;
+import com.ezangui.kata.domain.model.rule.MatchRule;
+import com.ezangui.kata.domain.model.rule.SingleMatchRule;
+import com.ezangui.kata.domain.model.update.GameUpdate;
+import com.ezangui.kata.domain.model.update.ScoreUpdate;
+import com.ezangui.kata.domain.model.update.WinnerUpdate;
 import com.ezangui.kata.domain.port.api.TennisGameService;
-import com.ezangui.kata.domain.port.spi.MessageEvent;
 import com.ezangui.kata.domain.port.spi.GameStorePort;
 
 import java.util.List;
@@ -22,10 +24,11 @@ public class TennisApplicationService implements TennisGameService {
     }
 
     @Override
-    public TennisGame createTennisGame(Player firstPlayer,
-                                       Player secondPlayer) {
-        TennisGame newTennisGame = new TennisGame(UUID.randomUUID().toString());
-        newTennisGame.addPlayers(firstPlayer, secondPlayer);
+    public TennisGame createSingleMatchTennisGame(List<Player> players) {
+        //Type of rule that could be loaded from a configuration service
+        MatchRule matchRule = new SingleMatchRule();
+        TennisGame newTennisGame = new TennisGame(UUID.randomUUID().toString(), matchRule);
+        newTennisGame.addPlayers(players);
         store.createGame(newTennisGame);
         return newTennisGame;
     }
@@ -37,23 +40,23 @@ public class TennisApplicationService implements TennisGameService {
 
     @Override
     public TennisGame awardPlayerNewPoint(TennisGame tennisGame, Player currentPlayer) {
-        MessageEvent messageEvent;
+        GameUpdate<String> gameUpdate;
 
         tennisGame.scorePointForPlayer(currentPlayer);
 
-        if (tennisGame.getWinner().isPresent()) {
-            messageEvent = new WinnerEventMessage(tennisGame.getWinner().get());
+        if (tennisGame.HasPlayerWonTheGame(currentPlayer)) {
+            gameUpdate = new WinnerUpdate(currentPlayer);
         } else {
-            messageEvent = new CurrentScoreMessageEvent(tennisGame.getCurrentScore());
+            gameUpdate = new ScoreUpdate(tennisGame.getCurrentScore());
         }
-        store.addMessage(tennisGame, messageEvent);
+        store.addMessage(tennisGame, gameUpdate);
 
         return tennisGame;
 
     }
 
     @Override
-    public List<MessageEvent> getAllEvents(TennisGame tennisGame) {
+    public List<GameUpdate> getAllUpdates(TennisGame tennisGame) {
         return store.getMessages(tennisGame);
     }
 

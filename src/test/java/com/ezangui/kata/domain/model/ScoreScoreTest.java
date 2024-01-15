@@ -26,7 +26,7 @@ public class ScoreScoreTest {
         scorePoint.scoreRegularPoint();//40
         scorePoint.scoreRegularPoint();// WIN
 
-        Assertions.assertEquals(TennisScore.Score.WIN, scorePoint.getScore());
+        Assertions.assertTrue(scorePoint.winnerScore());
         Assertions.assertThrows(IllegalStateException.class, scorePoint::scoreRegularPoint);
 
     }
