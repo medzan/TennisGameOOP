@@ -12,19 +12,19 @@ public class ScoreScoreTest {
     @Test
     public void whenScoreIsLessThen40_thenIncrementRegularScore() {
         TennisScore scorePoint = TennisScore.initScore();
-        scorePoint.scoreRegularPoint();
-        scorePoint.scoreRegularPoint();
-        scorePoint.scoreRegularPoint();
+        scorePoint = scorePoint.scoreRegularPoint();
+        scorePoint = scorePoint.scoreRegularPoint();
+        scorePoint = scorePoint.scoreRegularPoint();
 
         Assertions.assertEquals("40", scorePoint.toString());
     }
     @Test
     public void whenScoreIsWin_disallowAnyAdditionalPoints() {
         TennisScore scorePoint = TennisScore.initScore();
-        scorePoint.scoreRegularPoint();//15
-        scorePoint.scoreRegularPoint();//30
-        scorePoint.scoreRegularPoint();//40
-        scorePoint.scoreRegularPoint();// WIN
+        scorePoint = scorePoint.scoreRegularPoint();//15
+        scorePoint = scorePoint.scoreRegularPoint();//30
+        scorePoint = scorePoint.scoreRegularPoint();//40
+        scorePoint = scorePoint.scoreRegularPoint();// WIN
 
         Assertions.assertTrue(scorePoint.winnerScore());
         Assertions.assertThrows(IllegalStateException.class, scorePoint::scoreRegularPoint);

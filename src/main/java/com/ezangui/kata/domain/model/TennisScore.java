@@ -1,16 +1,16 @@
 package com.ezangui.kata.domain.model;
 
 /**
- * Address various scenarios associated with updating a tennis score value,
+ * Value object Address various scenarios associated with updating a tennis score value,
  * managing transitions between different score values.
  *
  * @author ZANGUI Elmehdi
  */
 public final class TennisScore {
 
-    private Score score;
+    private final Score score;
 
-    TennisScore(Score score) {
+    private TennisScore(Score score) {
         this.score = score;
     }
 
@@ -26,8 +26,8 @@ public final class TennisScore {
         return score.equals(Score.ADVANTAGE);
     }
 
-    void toDeuce() {
-        score = Score.THREE_POINTS;
+    TennisScore deuce() {
+        return new TennisScore(Score.THREE_POINTS);
     }
 
     public boolean winnerScore() {
@@ -42,23 +42,21 @@ public final class TennisScore {
         if (score != Score.THREE_POINTS) {
             throw new IllegalStateException("Point not eligible for advantage score" + score);
         }
-        score = Score.ADVANTAGE;
-        return this;
+        return new TennisScore(Score.ADVANTAGE);
     }
 
     TennisScore scoreRegularPoint() {
         if (score == Score.WIN) {
             throw new IllegalStateException("Cannot score any additional point" + score);
         }
-        score = switch (score) {
+        Score newScore = switch (score) {
             case ZERO_POINT -> Score.ONE_POINT;
             case ONE_POINT -> Score.TWO_POINTS;
             case TWO_POINTS -> Score.THREE_POINTS;
             case THREE_POINTS, ADVANTAGE -> Score.WIN;
             default -> throw new IllegalStateException("Unexpected value: " + score);
         };
-        return this;
-
+        return new TennisScore(newScore);
     }
 
     Score getScore() {

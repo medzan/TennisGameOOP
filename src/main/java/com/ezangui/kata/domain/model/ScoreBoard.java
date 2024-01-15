@@ -44,10 +44,7 @@ public class ScoreBoard {
     }
 
     private void resetScoresToDeuceForAllPlayers() {
-        for (var entry : playerScoreMap.entrySet()) {
-            TennisScore score = entry.getValue();
-            score.toDeuce();
-        }
+        playerScoreMap.replaceAll((player, score) -> score.deuce());
     }
 
     private boolean doesOpponentHaveAdvantage(Player player) {
