@@ -6,7 +6,17 @@ package com.ezangui.kata.domain.model;
  *
  * @author ZANGUI Elmehdi
  */
-public final class TennisScore {
+public final class TennisScore{
+    private enum Score {
+        ZERO_POINT("0"), ONE_POINT("15"),
+        TWO_POINTS("30"), THREE_POINTS("40"),
+        ADVANTAGE("A"), WIN("WINNER");
+        private final String label;
+
+        Score(String label) {
+            this.label = label;
+        }
+    }
 
     private final Score score;
 
@@ -59,24 +69,10 @@ public final class TennisScore {
         return new TennisScore(newScore);
     }
 
-    Score getScore() {
-        return score;
-    }
-
     @Override
     public String toString() {
         return score.label;
     }
 
-    private enum Score {
-        ZERO_POINT("0"), ONE_POINT("15"),
-        TWO_POINTS("30"), THREE_POINTS("40"),
-        ADVANTAGE("A"), WIN("WINNER");
-        private final String label;
-
-        Score(String label) {
-            this.label = label;
-        }
-    }
 
 }

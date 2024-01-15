@@ -40,12 +40,12 @@ public class TennisApplicationService implements TennisGameService {
 
     @Override
     public TennisGame awardPlayerNewPoint(TennisGame tennisGame, Player currentPlayer) {
-        GameUpdate<String> gameUpdate;
+        GameUpdate gameUpdate;
 
         tennisGame.scorePointForPlayer(currentPlayer);
 
         if (tennisGame.HasPlayerWonTheGame(currentPlayer)) {
-            gameUpdate = new WinnerUpdate(currentPlayer);
+            gameUpdate =  new WinnerUpdate(currentPlayer);
         } else {
             gameUpdate = new ScoreUpdate(tennisGame.getCurrentScore());
         }

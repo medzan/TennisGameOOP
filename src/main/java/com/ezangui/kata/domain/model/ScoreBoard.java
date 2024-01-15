@@ -54,11 +54,8 @@ public class ScoreBoard {
                         !e.getKey().equals(player) && e.getValue().hasAdvantage());
     }
 
-    List<GamePlayerScore> getCurrentScore() {
-        return playerScoreMap.entrySet()
-                .stream()
-                .map(e -> new GamePlayerScore(new Player(e.getKey().name()), TennisScore.clone(e.getValue())))
-                .toList();
+    GamePlayerScore getCurrentScore(Player player) {
+        return new GamePlayerScore(player, playerScoreMap.get(player));
     }
 
 

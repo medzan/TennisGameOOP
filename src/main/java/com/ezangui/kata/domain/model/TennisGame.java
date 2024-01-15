@@ -11,11 +11,15 @@ import java.util.List;
  * @author ZANGUI Elmehdi
  */
 public class TennisGame {
+    private enum GameState {
+        CREATED, IN_PROGRESS, FINISHED
+    }
     private final String id;
     private final MatchRule matchRules;
     private GameState state;
     private ScoreBoard scoreboard;
     private Player winner = null;
+    private List<Player> players;
 
     public TennisGame(String id, MatchRule matchRules) {
         this.id = id;
@@ -29,6 +33,8 @@ public class TennisGame {
                     " The current game is in the following state: " + state);
         }
         matchRules.validatePlayers(players);
+
+        this.players = players;
         this.scoreboard = new ScoreBoard(players);
         this.state = GameState.IN_PROGRESS;
     }
@@ -41,7 +47,8 @@ public class TennisGame {
             throw new IllegalStateException();
         }
         scoreboard.scorePoint(player);
-        if (matchRules.determineWinner(scoreboard.getCurrentScore())) {
+        ScoreBoard.GamePlayerScore currentScore = scoreboard.getCurrentScore(player);
+        if (matchRules.determineWinner(currentScore)) {
             winner = player;
             state = GameState.FINISHED;
         }
@@ -60,11 +67,11 @@ public class TennisGame {
     }
 
     public List<ScoreBoard.GamePlayerScore> getCurrentScore() {
-        return scoreboard.getCurrentScore();
+        return players.stream()
+                .map(player -> scoreboard.getCurrentScore(player))
+                .toList();
     }
 
-    private enum GameState {
-        CREATED, IN_PROGRESS, FINISHED
-    }
+
 
 }

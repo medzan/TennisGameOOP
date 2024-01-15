@@ -10,7 +10,7 @@ import java.util.List;
  * @author ZANGUI Elmehdi
  */
 public abstract class MatchRule {
-    public abstract void validatePlayers(List<Player> game);
+    public abstract void validatePlayers(List<Player> players);
 
-    public abstract boolean determineWinner(List<ScoreBoard.GamePlayerScore> scorePoint);
+    public abstract boolean determineWinner(ScoreBoard.GamePlayerScore scorePoint);
 }

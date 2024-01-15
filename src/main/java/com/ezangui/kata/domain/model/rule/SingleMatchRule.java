@@ -19,10 +19,8 @@ public class SingleMatchRule extends MatchRule {
     }
 
     @Override
-    public boolean determineWinner(List<ScoreBoard.GamePlayerScore> scoreView) {
-        return scoreView.stream()
-                .map(ScoreBoard.GamePlayerScore::scorePoint)
-                .anyMatch(TennisScore::winnerScore);
+    public boolean determineWinner(ScoreBoard.GamePlayerScore score) {
+        return score.scorePoint().winnerScore();
     }
 
 }

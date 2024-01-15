@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author ZANGUI Elmehdi
  */
-public class ScoreUpdate extends GameUpdate<String> {
+public class ScoreUpdate extends GameUpdate {
     private final String currentScore;
 
     public ScoreUpdate(List<ScoreBoard.GamePlayerScore> playerScoreViews) {
@@ -22,12 +22,12 @@ public class ScoreUpdate extends GameUpdate<String> {
     }
 
     @Override
-    public String getUpdate() {
+    public String getTextUpdate() {
         return currentScore;
     }
 
     @Override
     public String toString() {
-        return getUpdate();
+        return getTextUpdate();
     }
 }
