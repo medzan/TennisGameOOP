@@ -1,4 +1,4 @@
-package com.ezangui.kata.adapter.client.mapper;
+package com.ezangui.kata.infrastructure.adapter.client.mapper;
 
 import com.ezangui.kata.domain.model.Player;
 

@@ -1,8 +1,8 @@
-package com.ezangui.kata.adapter.memory;
+package com.ezangui.kata.infrastructure.adapter.memory;
 
 import com.ezangui.kata.domain.model.TennisGame;
 import com.ezangui.kata.domain.model.update.GameUpdate;
-import com.ezangui.kata.domain.port.spi.GameStorePort;
+import com.ezangui.kata.domain.port.spi.GameStore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * @author ZANGUI Elmehdi
  */
-public class GameMemoryStoreAdapter implements GameStorePort {
+public class GameMemoryStoreAdapter implements GameStore {
     Map<String, List<GameUpdate>> messagesPerGame = new HashMap<>();
     List<TennisGame> games = new ArrayList<>();
 
@@ -42,7 +42,7 @@ public class GameMemoryStoreAdapter implements GameStorePort {
         return games.stream()
                 .filter(g -> g.getId().equals(gameId))
                 .findAny()
-                .orElseThrow((() -> new IllegalArgumentException("Game " + gameId + "not found")));
+                .orElseThrow((() -> new IllegalArgumentException("Game " + gameId + " not found")));
     }
 
 }

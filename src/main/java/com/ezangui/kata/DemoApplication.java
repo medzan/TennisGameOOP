@@ -1,11 +1,11 @@
 package com.ezangui.kata;
 
-import com.ezangui.kata.adapter.client.SimpleTennisGameClient;
-import com.ezangui.kata.adapter.memory.GameMemoryStoreAdapter;
+import com.ezangui.kata.infrastructure.adapter.client.SimpleTennisGameClient;
+import com.ezangui.kata.infrastructure.adapter.memory.GameMemoryStoreAdapter;
 import com.ezangui.kata.application.TennisApplicationService;
 import com.ezangui.kata.domain.model.update.GameUpdate;
 import com.ezangui.kata.domain.port.api.TennisGameService;
-import com.ezangui.kata.domain.port.spi.GameStorePort;
+import com.ezangui.kata.domain.port.spi.GameStore;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class DemoApplication {
      * @param args
      */
     public static void main(String[] args) {
-        GameStorePort messagesStore = new GameMemoryStoreAdapter();
+        GameStore messagesStore = new GameMemoryStoreAdapter();
         TennisGameService gameService = new TennisApplicationService(messagesStore);
 
         SimpleTennisGameClient client = new SimpleTennisGameClient(gameService);

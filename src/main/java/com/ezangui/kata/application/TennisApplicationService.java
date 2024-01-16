@@ -8,7 +8,7 @@ import com.ezangui.kata.domain.model.update.GameUpdate;
 import com.ezangui.kata.domain.model.update.ScoreUpdate;
 import com.ezangui.kata.domain.model.update.WinnerUpdate;
 import com.ezangui.kata.domain.port.api.TennisGameService;
-import com.ezangui.kata.domain.port.spi.GameStorePort;
+import com.ezangui.kata.domain.port.spi.GameStore;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,9 +17,9 @@ import java.util.UUID;
  * @author ZANGUI Elmehdi
  */
 public class TennisApplicationService implements TennisGameService {
-    private final GameStorePort store;
+    private final GameStore store;
 
-    public TennisApplicationService(GameStorePort store) {
+    public TennisApplicationService(GameStore store) {
         this.store = store;
     }
 
@@ -45,9 +45,9 @@ public class TennisApplicationService implements TennisGameService {
         tennisGame.scorePointForPlayer(currentPlayer);
 
         if (tennisGame.HasPlayerWonTheGame(currentPlayer)) {
-            gameUpdate =  new WinnerUpdate(currentPlayer);
+            gameUpdate =  WinnerUpdate.create(currentPlayer);
         } else {
-            gameUpdate = new ScoreUpdate(tennisGame.getCurrentScore());
+            gameUpdate =  ScoreUpdate.create(tennisGame.getCurrentScoreForAllPlayers());
         }
         store.addMessage(tennisGame, gameUpdate);
 

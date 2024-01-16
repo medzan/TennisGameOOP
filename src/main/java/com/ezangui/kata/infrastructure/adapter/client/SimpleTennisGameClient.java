@@ -1,6 +1,6 @@
-package com.ezangui.kata.adapter.client;
+package com.ezangui.kata.infrastructure.adapter.client;
 
-import com.ezangui.kata.adapter.client.mapper.GameMapper;
+import com.ezangui.kata.infrastructure.adapter.client.mapper.GameMapper;
 import com.ezangui.kata.domain.model.Player;
 import com.ezangui.kata.domain.model.TennisGame;
 import com.ezangui.kata.domain.model.update.GameUpdate;

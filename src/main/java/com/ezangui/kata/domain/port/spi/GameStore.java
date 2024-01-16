@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author ZANGUI Elmehdi
  */
-public interface GameStorePort {
+public interface GameStore {
     void addMessage(TennisGame tennisGame, GameUpdate message);
 
     List<GameUpdate> getMessages(TennisGame tennisGame);

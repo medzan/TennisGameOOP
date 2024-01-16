@@ -37,11 +37,11 @@ public class TennisGameTest {
         tennisGame.scorePointForPlayer(firstPlayer);
         tennisGame.scorePointForPlayer(secondPlayer);
         tennisGame.scorePointForPlayer(secondPlayer);
-        List<ScoreBoard.GamePlayerScore> currentScore = tennisGame.getCurrentScore();
+        List<PlayerScore> currentScore = tennisGame.getCurrentScoreForAllPlayers();
         Assertions.assertEquals(2, currentScore.size());
 
-        Assertions.assertEquals("15",currentScore.get(0).scorePoint().toString());
-        Assertions.assertEquals("30",currentScore.get(1).scorePoint().toString());
+        Assertions.assertEquals("15",currentScore.get(0).tennisScore().toString());
+        Assertions.assertEquals("30",currentScore.get(1).tennisScore().toString());
 
 
     }

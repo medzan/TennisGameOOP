@@ -1,7 +1,7 @@
 package com.ezangui.kata.client;
 
-import com.ezangui.kata.adapter.client.SimpleTennisGameClient;
-import com.ezangui.kata.adapter.memory.GameMemoryStoreAdapter;
+import com.ezangui.kata.infrastructure.adapter.client.SimpleTennisGameClient;
+import com.ezangui.kata.infrastructure.adapter.memory.GameMemoryStoreAdapter;
 import com.ezangui.kata.application.TennisApplicationService;
 import com.ezangui.kata.domain.model.update.GameUpdate;
 import com.ezangui.kata.domain.port.api.TennisGameService;

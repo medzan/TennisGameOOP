@@ -1,8 +1,7 @@
 package com.ezangui.kata.domain.model.rule;
 
+import com.ezangui.kata.domain.model.PlayerScore;
 import com.ezangui.kata.domain.model.Player;
-import com.ezangui.kata.domain.model.ScoreBoard;
-import com.ezangui.kata.domain.model.TennisScore;
 
 import java.util.List;
 
@@ -19,8 +18,8 @@ public class SingleMatchRule extends MatchRule {
     }
 
     @Override
-    public boolean determineWinner(ScoreBoard.GamePlayerScore score) {
-        return score.scorePoint().winnerScore();
+    public boolean determineWinner(PlayerScore score) {
+        return score.tennisScore().winnerScore();
     }
 
 }

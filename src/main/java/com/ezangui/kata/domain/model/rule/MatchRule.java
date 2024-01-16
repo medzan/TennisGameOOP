@@ -1,7 +1,7 @@
 package com.ezangui.kata.domain.model.rule;
 
+import com.ezangui.kata.domain.model.PlayerScore;
 import com.ezangui.kata.domain.model.Player;
-import com.ezangui.kata.domain.model.ScoreBoard;
 
 
 import java.util.List;
@@ -12,5 +12,5 @@ import java.util.List;
 public abstract class MatchRule {
     public abstract void validatePlayers(List<Player> players);
 
-    public abstract boolean determineWinner(ScoreBoard.GamePlayerScore scorePoint);
+    public abstract boolean determineWinner(PlayerScore scorePoint);
 }

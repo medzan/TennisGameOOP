@@ -47,7 +47,7 @@ public class TennisGame {
             throw new IllegalStateException();
         }
         scoreboard.scorePoint(player);
-        ScoreBoard.GamePlayerScore currentScore = scoreboard.getCurrentScore(player);
+        PlayerScore currentScore = scoreboard.getCurrentScore(player);
         if (matchRules.determineWinner(currentScore)) {
             winner = player;
             state = GameState.FINISHED;
@@ -55,7 +55,9 @@ public class TennisGame {
     }
 
     public boolean HasPlayerWonTheGame(Player player) {
-        return state == GameState.FINISHED && winner.equals(player);
+        return state == GameState.FINISHED
+                && winner != null
+                && winner.equals(player);
     }
 
     public String getId() {
@@ -66,7 +68,7 @@ public class TennisGame {
         return state != GameState.FINISHED;
     }
 
-    public List<ScoreBoard.GamePlayerScore> getCurrentScore() {
+    public List<PlayerScore> getCurrentScoreForAllPlayers() {
         return players.stream()
                 .map(player -> scoreboard.getCurrentScore(player))
                 .toList();

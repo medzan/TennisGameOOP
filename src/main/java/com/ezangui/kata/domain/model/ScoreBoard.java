@@ -11,7 +11,6 @@ import java.util.Map;
  * @author ZANGUI Elmehdi
  */
 public class ScoreBoard {
-    public record GamePlayerScore(Player player, TennisScore scorePoint) { }
     //linkedHashMap To preserve the orders of the players
     private final Map<Player, TennisScore> playerScoreMap = new LinkedHashMap<>();
 
@@ -54,8 +53,8 @@ public class ScoreBoard {
                         !e.getKey().equals(player) && e.getValue().hasAdvantage());
     }
 
-    GamePlayerScore getCurrentScore(Player player) {
-        return new GamePlayerScore(player, playerScoreMap.get(player));
+    PlayerScore getCurrentScore(Player player) {
+        return new PlayerScore(player, playerScoreMap.get(player));
     }
 
 
