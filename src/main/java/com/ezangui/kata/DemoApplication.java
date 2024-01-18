@@ -3,7 +3,7 @@ package com.ezangui.kata;
 import com.ezangui.kata.infrastructure.adapter.client.SimpleTennisGameClient;
 import com.ezangui.kata.infrastructure.adapter.memory.GameMemoryStoreAdapter;
 import com.ezangui.kata.application.TennisApplicationService;
-import com.ezangui.kata.domain.model.update.GameUpdate;
+import com.ezangui.kata.domain.model.update.ScoreUpdate;
 import com.ezangui.kata.domain.port.api.TennisGameService;
 import com.ezangui.kata.domain.port.spi.GameStore;
 
@@ -24,12 +24,12 @@ public class DemoApplication {
      * @param args
      */
     public static void main(String[] args) {
-        GameStore messagesStore = new GameMemoryStoreAdapter();
-        TennisGameService gameService = new TennisApplicationService(messagesStore);
+        GameStore store = new GameMemoryStoreAdapter();
+        TennisGameService gameService = new TennisApplicationService(store);
 
         SimpleTennisGameClient client = new SimpleTennisGameClient(gameService);
         String gameId = client.createSingleMatchTennisGame("A", "B");
-        List<GameUpdate> messages = client.runGame(gameId, "ABABAA");
+        List<ScoreUpdate> messages = client.runGame(gameId, "ABABAA");
         messages.forEach(System.out::println);
         // Alternative way to run the game
         // client.createAndRunAGame("A", "B", "ABABAA");

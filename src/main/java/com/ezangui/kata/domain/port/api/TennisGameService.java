@@ -2,7 +2,7 @@ package com.ezangui.kata.domain.port.api;
 
 import com.ezangui.kata.domain.model.Player;
 import com.ezangui.kata.domain.model.TennisGame;
-import com.ezangui.kata.domain.model.update.GameUpdate;
+import com.ezangui.kata.domain.model.update.ScoreUpdate;
 
 import java.util.List;
 
@@ -16,6 +16,6 @@ public interface TennisGameService {
 
     TennisGame awardPlayerNewPoint(TennisGame tennisGame, Player player);
 
-    List<GameUpdate> getAllUpdates(TennisGame tennisGame);
+    List<ScoreUpdate> getAllUpdates(TennisGame tennisGame);
 
 }

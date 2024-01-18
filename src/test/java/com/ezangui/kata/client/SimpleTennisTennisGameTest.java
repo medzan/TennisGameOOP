@@ -3,7 +3,7 @@ package com.ezangui.kata.client;
 import com.ezangui.kata.infrastructure.adapter.client.SimpleTennisGameClient;
 import com.ezangui.kata.infrastructure.adapter.memory.GameMemoryStoreAdapter;
 import com.ezangui.kata.application.TennisApplicationService;
-import com.ezangui.kata.domain.model.update.GameUpdate;
+import com.ezangui.kata.domain.model.update.ScoreUpdate;
 import com.ezangui.kata.domain.port.api.TennisGameService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ public class SimpleTennisTennisGameTest {
         TennisGameService service = new TennisApplicationService(gameMessageMemoryStore);
         SimpleTennisGameClient consoleInputTennisGame = new SimpleTennisGameClient(service);
 
-        List<GameUpdate> actualResults = consoleInputTennisGame.createAndRunAGame("A", "B", "ABABAA");
+        List<ScoreUpdate> actualResults = consoleInputTennisGame.createAndRunAGame("A", "B", "ABABAA");
 
         Assertions.assertEquals(expected.size(), actualResults.size());
 
@@ -51,7 +51,7 @@ public class SimpleTennisTennisGameTest {
 
         TennisGameService service = new TennisApplicationService(gameMessageMemoryStore);
         SimpleTennisGameClient consoleInputTennisGame = new SimpleTennisGameClient(service);
-        List<GameUpdate> actualResults = consoleInputTennisGame.createAndRunAGame("A", "B", "ABABABBB");
+        List<ScoreUpdate> actualResults = consoleInputTennisGame.createAndRunAGame("A", "B", "ABABABBB");
 
         Assertions.assertEquals(expected.size(), actualResults.size());
 
@@ -79,7 +79,7 @@ public class SimpleTennisTennisGameTest {
 
         TennisGameService service = new TennisApplicationService(gameMessageMemoryStore);
         SimpleTennisGameClient consoleInputTennisGame = new SimpleTennisGameClient(service);
-        List<GameUpdate> actualResults = consoleInputTennisGame.createAndRunAGame("A", "B", "ABABABBAAA");
+        List<ScoreUpdate> actualResults = consoleInputTennisGame.createAndRunAGame("A", "B", "ABABABBAAA");
 
         Assertions.assertEquals(expected.size(), actualResults.size());
 

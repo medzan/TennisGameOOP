@@ -3,7 +3,7 @@ package com.ezangui.kata.infrastructure.adapter.client;
 import com.ezangui.kata.infrastructure.adapter.client.mapper.GameMapper;
 import com.ezangui.kata.domain.model.Player;
 import com.ezangui.kata.domain.model.TennisGame;
-import com.ezangui.kata.domain.model.update.GameUpdate;
+import com.ezangui.kata.domain.model.update.ScoreUpdate;
 import com.ezangui.kata.domain.port.api.TennisGameService;
 
 import java.util.Arrays;
@@ -32,7 +32,7 @@ public class SimpleTennisGameClient {
         return tennisGame.getId();
     }
 
-    public List<GameUpdate> runGame(String gameId, String playerWinOrder) {
+    public List<ScoreUpdate> runGame(String gameId, String playerWinOrder) {
         TennisGame tennisGame = tennisGameService.getGameById(gameId);
 
         int currentRoundIndice = 0;
@@ -47,7 +47,7 @@ public class SimpleTennisGameClient {
         return tennisGameService.getAllUpdates(tennisGame);
     }
 
-    public List<GameUpdate> createAndRunAGame(String firstPlayerName, String secondPlayerName, String playerWinOrder) {
+    public List<ScoreUpdate> createAndRunAGame(String firstPlayerName, String secondPlayerName, String playerWinOrder) {
         String gameId = createSingleMatchTennisGame(firstPlayerName, secondPlayerName);
         return runGame(gameId, playerWinOrder);
     }

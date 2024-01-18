@@ -1,6 +1,9 @@
 package com.ezangui.kata.domain.model;
 
 import com.ezangui.kata.domain.model.rule.MatchRule;
+import com.ezangui.kata.domain.model.update.ScoreUpdate;
+import com.ezangui.kata.domain.model.update.CurrentScore;
+import com.ezangui.kata.domain.model.update.WinnerUpdate;
 
 import java.util.List;
 
@@ -18,7 +21,6 @@ public class TennisGame {
     private final MatchRule matchRules;
     private GameState state;
     private ScoreBoard scoreboard;
-    private Player winner = null;
     private List<Player> players;
 
     public TennisGame(String id, MatchRule matchRules) {
@@ -39,7 +41,7 @@ public class TennisGame {
         this.state = GameState.IN_PROGRESS;
     }
 
-    public void scorePointForPlayer(Player player) {
+    public ScoreUpdate scorePointForPlayer(Player player) {
         if (state != GameState.IN_PROGRESS) {
             throw new IllegalStateException("Cannot Play any more the game is in the following state " + state);
         }
@@ -49,15 +51,10 @@ public class TennisGame {
         scoreboard.scorePoint(player);
         PlayerScore currentScore = scoreboard.getCurrentScore(player);
         if (matchRules.determineWinner(currentScore)) {
-            winner = player;
             state = GameState.FINISHED;
+            return  WinnerUpdate.create(player);
         }
-    }
-
-    public boolean HasPlayerWonTheGame(Player player) {
-        return state == GameState.FINISHED
-                && winner != null
-                && winner.equals(player);
+        return CurrentScore.create(getCurrentScoreForAllPlayers());
     }
 
     public String getId() {

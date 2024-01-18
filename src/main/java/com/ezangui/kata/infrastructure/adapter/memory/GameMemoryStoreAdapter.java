@@ -1,7 +1,7 @@
 package com.ezangui.kata.infrastructure.adapter.memory;
 
 import com.ezangui.kata.domain.model.TennisGame;
-import com.ezangui.kata.domain.model.update.GameUpdate;
+import com.ezangui.kata.domain.model.update.ScoreUpdate;
 import com.ezangui.kata.domain.port.spi.GameStore;
 
 import java.util.ArrayList;
@@ -13,23 +13,24 @@ import java.util.Map;
  * @author ZANGUI Elmehdi
  */
 public class GameMemoryStoreAdapter implements GameStore {
-    Map<String, List<GameUpdate>> messagesPerGame = new HashMap<>();
+    Map<String, List<ScoreUpdate>> updatesPerGame = new HashMap<>();
     List<TennisGame> games = new ArrayList<>();
 
     @Override
-    public void addMessage(TennisGame tennisGame, GameUpdate message) {
-        messagesPerGame.compute(tennisGame.getId(), (k, v) -> {
+    public void addUpdate(TennisGame tennisGame, ScoreUpdate update) {
+        updatesPerGame.compute(tennisGame.getId(), (k, v) -> {
             if (v == null) {
                 v = new ArrayList<>();
             }
-            v.add(message);
+            v.add(update);
             return v;
         });
     }
 
     @Override
-    public List<GameUpdate> getMessages(TennisGame tennisGame) {
-        return messagesPerGame.get(tennisGame.getId());
+    public List<ScoreUpdate> getUpdates(TennisGame tennisGame) {
+
+        return updatesPerGame.get(tennisGame.getId());
     }
 
     @Override

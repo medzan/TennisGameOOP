@@ -4,9 +4,7 @@ import com.ezangui.kata.domain.model.Player;
 import com.ezangui.kata.domain.model.TennisGame;
 import com.ezangui.kata.domain.model.rule.MatchRule;
 import com.ezangui.kata.domain.model.rule.SingleMatchRule;
-import com.ezangui.kata.domain.model.update.GameUpdate;
 import com.ezangui.kata.domain.model.update.ScoreUpdate;
-import com.ezangui.kata.domain.model.update.WinnerUpdate;
 import com.ezangui.kata.domain.port.api.TennisGameService;
 import com.ezangui.kata.domain.port.spi.GameStore;
 
@@ -40,24 +38,18 @@ public class TennisApplicationService implements TennisGameService {
 
     @Override
     public TennisGame awardPlayerNewPoint(TennisGame tennisGame, Player currentPlayer) {
-        GameUpdate gameUpdate;
 
-        tennisGame.scorePointForPlayer(currentPlayer);
+        ScoreUpdate scoreUpdate = tennisGame.scorePointForPlayer(currentPlayer);
 
-        if (tennisGame.HasPlayerWonTheGame(currentPlayer)) {
-            gameUpdate =  WinnerUpdate.create(currentPlayer);
-        } else {
-            gameUpdate =  ScoreUpdate.create(tennisGame.getCurrentScoreForAllPlayers());
-        }
-        store.addMessage(tennisGame, gameUpdate);
+        store.addUpdate(tennisGame, scoreUpdate);
 
         return tennisGame;
 
     }
 
     @Override
-    public List<GameUpdate> getAllUpdates(TennisGame tennisGame) {
-        return store.getMessages(tennisGame);
+    public List<ScoreUpdate> getAllUpdates(TennisGame tennisGame) {
+        return store.getUpdates(tennisGame);
     }
 
 }
